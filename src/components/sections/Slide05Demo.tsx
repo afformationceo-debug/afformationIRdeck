@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Clock, Zap, ArrowRight, LayoutDashboard, UserCircle, Inbox } from "lucide-react";
+import { Search, Clock, Zap, ArrowRight, LayoutDashboard, UserCircle, Inbox, TrendingUp, Star } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import AgentIndicator from "@/components/ui/AgentIndicator";
@@ -20,12 +20,12 @@ const fadeUp = {
 };
 
 const creators = [
-  { name: "Creator_01", followers: "12.5K", engagement: "4.2%", color: "#FF6B2C", match: 94 },
-  { name: "Creator_02", followers: "89.1K", engagement: "6.1%", color: "#8B5CF6", match: 91 },
-  { name: "Creator_03", followers: "35.2K", engagement: "5.3%", color: "#3B82F6", match: 88 },
-  { name: "Creator_04", followers: "22.0K", engagement: "3.9%", color: "#10B981", match: 85 },
-  { name: "Creator_05", followers: "67.4K", engagement: "7.4%", color: "#14B8A6", match: 82 },
-  { name: "Creator_06", followers: "18.3K", engagement: "4.8%", color: "#EF4444", match: 79 },
+  { name: "Sarah Kim", handle: "@sarahbeauty", followers: "12.5K", engagement: "4.2%", color: "#FF6B2C", match: 94, category: "Beauty" },
+  { name: "Mia Chen", handle: "@miacreates", followers: "89.1K", engagement: "6.1%", color: "#8B5CF6", match: 91, category: "Lifestyle" },
+  { name: "Jae Park", handle: "@jaestyle", followers: "35.2K", engagement: "5.3%", color: "#3B82F6", match: 88, category: "Fashion" },
+  { name: "Luna Lee", handle: "@lunavibes", followers: "22.0K", engagement: "3.9%", color: "#10B981", match: 85, category: "Wellness" },
+  { name: "Hana Ito", handle: "@hanastyle", followers: "67.4K", engagement: "7.4%", color: "#14B8A6", match: 82, category: "Beauty" },
+  { name: "Alex Yoo", handle: "@alexyoo", followers: "18.3K", engagement: "4.8%", color: "#F59E0B", match: 79, category: "Food" },
 ];
 
 const screenshots = [
@@ -114,44 +114,77 @@ export default function Slide05Demo() {
 
       {/* Browser Mockup */}
       <motion.div
-        className="browser max-w-3xl mx-auto glow-orange"
-        initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-        whileHover={{ rotateX: -1, rotateY: 1, scale: 1.01, boxShadow: "0 20px 50px rgba(255,107,44,0.18)" }}
+        className="max-w-4xl mx-auto rounded-2xl overflow-hidden"
+        style={{
+          background: "white",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)",
+          border: "1px solid rgba(232,226,220,0.6)",
+        }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        whileHover={{ y: -4, boxShadow: "0 20px 60px rgba(0,0,0,0.1)" }}
         viewport={{ once: true }}
         transition={{ duration: 0.9, type: "spring", stiffness: 70, damping: 14 }}
-        style={{ perspective: "1000px" }}
       >
-        {/* Browser Bar */}
-        <div className="browser-bar">
+        {/* Browser Chrome */}
+        <div
+          className="flex items-center justify-between px-4 sm:px-5 py-3"
+          style={{ background: "#FAFAF8", borderBottom: "1px solid rgba(232,226,220,0.6)" }}
+        >
           <div className="flex gap-2">
-            <div className="w-3.5 h-3.5 rounded-full shadow-sm" style={{ background: "#EF4444" }} />
-            <div className="w-3.5 h-3.5 rounded-full shadow-sm" style={{ background: "#F59E0B" }} />
-            <div className="w-3.5 h-3.5 rounded-full shadow-sm" style={{ background: "#22C55E" }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F57" }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: "#FEBC2E" }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: "#28C840" }} />
           </div>
-          <div className="flex-1 flex justify-center">
-            <div className="bg-white border border-card-border rounded-full px-4 py-1.5 text-xs text-t3 font-mono flex items-center gap-2 max-w-xs w-full">
-              <span className="text-green text-[10px]">&#9679;</span>
-              scoutmanager.io
+          <div className="flex-1 flex justify-center px-4">
+            <div
+              className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs max-w-xs w-full justify-center"
+              style={{ background: "white", border: "1px solid rgba(232,226,220,0.8)" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#28C840]" />
+              <span className="text-t3 font-mono">scoutmanager.io</span>
             </div>
           </div>
           <AgentIndicator label="AI 분석 중" status="processing" />
         </div>
 
-        {/* Browser Body */}
-        <div className="p-6">
-          {/* Search Bar with typing animation */}
+        {/* App Body */}
+        <div className="p-5 sm:p-7">
+          {/* Top Nav Tabs */}
+          <div className="flex items-center gap-1 mb-5 pb-3" style={{ borderBottom: "1px solid rgba(232,226,220,0.5)" }}>
+            {["대시보드", "크리에이터 탐색", "캠페인", "인박스", "정산"].map((tab, i) => (
+              <span
+                key={tab}
+                className="text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-all"
+                style={{
+                  background: i === 1 ? "rgba(255,107,44,0.08)" : "transparent",
+                  color: i === 1 ? "#FF6B2C" : "#999",
+                  fontWeight: i === 1 ? 800 : 600,
+                }}
+              >
+                {tab}
+              </span>
+            ))}
+          </div>
+
+          {/* Search Bar */}
           <motion.div
-            className="flex items-center gap-3 mb-6 bg-white border border-card-border rounded-xl px-4 py-3"
+            className="flex items-center gap-3 mb-5 rounded-xl px-4 py-3.5"
+            style={{ background: "#FAFAF8", border: "1.5px solid rgba(232,226,220,0.6)" }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <Search size={18} className="text-orange shrink-0" />
-            <span className="badge badge-dark text-[9px] py-0.5 px-1.5 shrink-0">AI</span>
+            <Search size={18} className="text-[#FF6B2C] shrink-0" />
+            <span
+              className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0"
+              style={{ background: "#1A1A1A", color: "white" }}
+            >
+              AI
+            </span>
             <motion.span
-              className="text-sm text-t1"
+              className="text-sm text-t1 font-medium"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -159,18 +192,21 @@ export default function Slide05Demo() {
             >
               미국 뷰티 틱톡커 100명 추출
             </motion.span>
-            <span className="ml-auto w-0.5 h-5 bg-orange rounded-full anim-blink" />
+            <span className="ml-auto w-0.5 h-5 bg-[#FF6B2C] rounded-full anim-blink" />
           </motion.div>
 
-          {/* Processing Indicator */}
-          <div className="flex items-center gap-2 mb-4 text-xs text-[#999]" style={{ opacity: 0.6 }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B2C] animate-pulse" />
-            ScoutManager AI가 최적의 크리에이터를 분석 중...
+          {/* Processing Status */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B2C] opacity-50" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B2C]" />
+            </span>
+            <span className="text-xs text-t3">ScoutManager AI가 최적의 크리에이터를 분석 중...</span>
           </div>
 
-          {/* Influencer Grid with match scores */}
+          {/* Creator Grid */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5"
             variants={stagger}
             initial="hidden"
             whileInView="visible"
@@ -180,76 +216,103 @@ export default function Slide05Demo() {
               <motion.div
                 key={c.name}
                 variants={fadeUp}
-                className="card-flat p-4 flex items-center gap-3 relative"
-                whileHover={{ y: -3, rotateX: 2, boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}
-                style={{ perspective: "800px" }}
+                className="relative flex items-center gap-3 rounded-xl p-3.5"
+                style={{
+                  background: "#FAFAF8",
+                  border: "1px solid rgba(232,226,220,0.5)",
+                }}
+                whileHover={{ y: -2, background: "white", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
               >
-                {/* AI Match Score */}
+                {/* Match badge */}
                 <div
-                  className="absolute top-2 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                  className="absolute top-2 right-2 text-[9px] font-bold px-2 py-0.5 rounded-full"
                   style={{
-                    background: c.match >= 90 ? "rgba(16,185,129,0.1)" : "rgba(59,130,246,0.1)",
-                    color: c.match >= 90 ? "#10B981" : "#3B82F6",
+                    background: c.match >= 90 ? "rgba(16,185,129,0.08)" : c.match >= 85 ? "rgba(59,130,246,0.08)" : "rgba(249,115,22,0.08)",
+                    color: c.match >= 90 ? "#10B981" : c.match >= 85 ? "#3B82F6" : "#F97316",
                   }}
                 >
                   Match {c.match}%
                 </div>
-                <div
-                  className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-xs font-bold text-white"
-                  style={{ background: c.color }}
-                >
-                  {c.name.charAt(0)}
+
+                {/* Avatar */}
+                <div className="relative shrink-0">
+                  <div
+                    className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                    style={{ background: c.color }}
+                  >
+                    {c.name.charAt(0)}
+                  </div>
+                  {/* Online indicator */}
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#28C840] border-2 border-white" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-xs font-semibold text-t1 truncate">{c.name}</div>
-                  <div className="text-[11px] text-t3 mt-0.5">
-                    팔로워 {c.followers} · 참여율 {c.engagement}
+
+                {/* Info */}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[13px] font-bold text-t1 truncate">{c.name}</span>
+                    {c.match >= 90 && <Star size={10} className="text-[#F59E0B] fill-[#F59E0B] shrink-0" />}
+                  </div>
+                  <span className="text-[10px] text-t3 block">{c.handle}</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[10px] font-semibold text-t2">{c.followers}</span>
+                    <span className="text-[10px] text-t4">·</span>
+                    <span className="text-[10px] font-semibold" style={{ color: parseFloat(c.engagement) > 5 ? "#10B981" : "#3B82F6" }}>
+                      <TrendingUp size={8} className="inline mr-0.5" />{c.engagement}
+                    </span>
+                    <span
+                      className="text-[8px] font-bold px-1.5 py-0.5 rounded ml-auto"
+                      style={{ background: `${c.color}10`, color: c.color }}
+                    >
+                      {c.category}
+                    </span>
                   </div>
                 </div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* AI Analysis Status */}
-          <div className="flex items-center gap-2 text-xs text-[#10B981] font-semibold mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-            AI 자동 분석 완료 &middot; 100명 매칭
-          </div>
-
-          {/* Action Row */}
-          <motion.div
-            className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8, type: "spring", stiffness: 120, damping: 12 }}
+          {/* Status + Actions */}
+          <div
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-4"
+            style={{ borderTop: "1px solid rgba(232,226,220,0.5)" }}
           >
-            <motion.button
-              className="bg-orange text-white px-5 py-2.5 rounded-xl font-semibold text-sm"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.9, type: "spring", stiffness: 200, damping: 10, bounce: 0.4 }}
-              whileHover={{ scale: 1.07, boxShadow: "0 10px 25px rgba(255,107,44,0.25)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              AI 자동 DM 발송
-            </motion.button>
-            <motion.button
-              className="bg-orange text-white px-5 py-2.5 rounded-xl font-semibold text-sm"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.0, type: "spring", stiffness: 200, damping: 10, bounce: 0.4 }}
-              whileHover={{ scale: 1.07, boxShadow: "0 10px 25px rgba(255,107,44,0.25)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              단가 자동 협상
-            </motion.button>
-            <div className="sm:ml-auto">
-              <span className="badge badge-green">&#10003; 100명 완료</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#10B981]">
+              <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+              AI 자동 분석 완료 · 100명 매칭
             </div>
-          </motion.div>
+            <div className="flex items-center gap-2 sm:ml-auto">
+              <motion.button
+                className="px-4 py-2 rounded-xl text-sm font-bold text-white"
+                style={{ background: "#FF6B2C" }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.9, type: "spring", stiffness: 200, damping: 10 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(255,107,44,0.25)" }}
+                whileTap={{ scale: 0.97 }}
+              >
+                AI 자동 DM 발송
+              </motion.button>
+              <motion.button
+                className="px-4 py-2 rounded-xl text-sm font-bold"
+                style={{ background: "rgba(255,107,44,0.08)", color: "#FF6B2C", border: "1px solid rgba(255,107,44,0.15)" }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.0, type: "spring", stiffness: 200, damping: 10 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                단가 자동 협상
+              </motion.button>
+              <span
+                className="text-[11px] font-bold px-3 py-1.5 rounded-full hidden sm:inline-block"
+                style={{ background: "rgba(16,185,129,0.06)", color: "#10B981", border: "1px solid rgba(16,185,129,0.12)" }}
+              >
+                &#10003; 100명 완료
+              </span>
+            </div>
+          </div>
         </div>
       </motion.div>
 
@@ -299,19 +362,22 @@ export default function Slide05Demo() {
         initial={{ opacity: 0, scale: 0.7, y: 30 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.4, duration: 0.8, type: "spring", stiffness: 80, damping: 12, bounce: 0.3 }}
+        transition={{ delay: 0.4, duration: 0.8, type: "spring", stiffness: 80, damping: 12 }}
       >
-        <div className="card-flat flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 py-6 px-10">
+        <div
+          className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 py-6 px-10 rounded-2xl"
+          style={{ background: "white", border: "1px solid rgba(232,226,220,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.04)" }}
+        >
           <div className="flex items-center gap-3">
-            <div className="ic ic-sm ic-red">
-              <Clock size={22} />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(239,68,68,0.06)" }}>
+              <Clock size={20} className="text-[#EF4444]" />
             </div>
-            <span className="text-lg text-[#999] line-through decoration-2">기존 1주일</span>
+            <span className="text-lg text-t3 line-through decoration-2">기존 1주일</span>
           </div>
-          <ArrowRight size={28} className="text-orange" />
+          <ArrowRight size={28} className="text-[#FF6B2C]" />
           <div className="flex items-center gap-3">
-            <div className="ic ic-sm ic-green">
-              <Zap size={22} />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(16,185,129,0.06)" }}>
+              <Zap size={20} className="text-[#10B981]" />
             </div>
             <span className="text-3xl md:text-4xl font-black gt" style={{ letterSpacing: "-0.02em" }}>단 3분</span>
           </div>
