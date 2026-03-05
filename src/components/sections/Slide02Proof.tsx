@@ -2,10 +2,9 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { TrendingUp, DollarSign, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { TrendingUp, DollarSign, ShieldCheck, ArrowUpRight, Bot, Sparkles, Zap } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
-import AgentIndicator from "@/components/ui/AgentIndicator";
 import AiChatBubble from "@/components/ui/AiChatBubble";
 
 function AnimatedCounter({
@@ -80,15 +79,7 @@ function MiniGraph() {
         </linearGradient>
       </defs>
       {[20, 40, 60, 80].map((y) => (
-        <line
-          key={y}
-          x1="0"
-          y1={y}
-          x2="400"
-          y2={y}
-          stroke="#E8E2DC"
-          strokeWidth="0.5"
-        />
+        <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="#E8E2DC" strokeWidth="0.5" />
       ))}
       <motion.path
         d={areaD}
@@ -129,48 +120,6 @@ function MiniGraph() {
   );
 }
 
-const heroStats = [
-  {
-    icon: DollarSign,
-    iconClass: "ic ic-orange",
-    end: 30.1,
-    prefix: "₩",
-    suffix: "억",
-    label: "2025 매출",
-    sub: "YoY +924%",
-  },
-  {
-    icon: TrendingUp,
-    iconClass: "ic ic-green",
-    end: 35.2,
-    prefix: "",
-    suffix: "%",
-    label: "EBITDA 마진",
-    sub: "업계 2~3배",
-  },
-];
-
-const defaultStats = [
-  {
-    icon: ArrowUpRight,
-    iconClass: "ic ic-blue",
-    end: 924,
-    prefix: "+",
-    suffix: "%",
-    label: "YoY 성장",
-    sub: "전기 대비",
-  },
-  {
-    icon: ShieldCheck,
-    iconClass: "ic ic-purple",
-    end: 7.5,
-    prefix: "",
-    suffix: "%",
-    label: "부채비율",
-    sub: "358%→7.5%",
-  },
-];
-
 const comparisonData = [
   { metric: "EBITDA 마진", afformation: "35.2%", industry: "10~15%", highlight: true },
   { metric: "부채비율", afformation: "7.5%", industry: "50%+", highlight: true },
@@ -195,139 +144,152 @@ export default function Slide02Proof() {
 
         {/* AI Agent Indicator */}
         <motion.div
-          className="flex justify-center mb-6"
+          className="flex justify-center mb-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <AgentIndicator label="AI-Powered Revenue Engine" status="active" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: "rgba(255,107,44,0.06)", border: "1px solid rgba(255,107,44,0.12)" }}>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B2C] opacity-40" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B2C]" />
+            </span>
+            <span className="text-[11px] font-bold text-[#FF6B2C]">AI-Powered Revenue Engine</span>
+          </div>
         </motion.div>
 
-        {/* 2+2 Layout: Hero stats on top, default below */}
-        <div ref={counterRef} className="max-w-3xl mx-auto mb-6">
-          {/* Hero Row - 2 cards */}
+        {/* ===== Dark Stats Container ===== */}
+        <div ref={counterRef} className="max-w-4xl mx-auto mb-6">
           <motion.div
-            className="grid grid-cols-2 gap-4 mb-4"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.12, delayChildren: 0.2 },
-              },
+            className="rounded-2xl overflow-hidden"
+            style={{
+              background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+              border: "1px solid rgba(255,107,44,0.1)",
+              boxShadow: "0 12px 50px rgba(0,0,0,0.2)",
             }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.7 }}
           >
-            {heroStats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={stat.label}
-                  className="metric-hero"
-                  style={{ perspective: "800px" }}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, rotateX: 8 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      rotateX: 0,
-                      transition: { duration: 0.6, type: "spring", stiffness: 100, damping: 15 },
-                    },
-                  }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 12px 30px rgba(255,107,44,0.12)" }}
-                >
-                  <div className="flex justify-center mb-3">
-                    <div className={stat.iconClass}>
-                      <Icon size={24} />
-                    </div>
-                  </div>
-                  <div className="text-4xl md:text-5xl font-black gt mb-1 whitespace-nowrap">
-                    <AnimatedCounter
-                      end={stat.end}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                      trigger={isInView}
-                    />
-                  </div>
-                  <div className="text-sm font-semibold text-t1 mb-0.5">{stat.label}</div>
-                  <div className="text-xs text-t2">{stat.sub}</div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+            {/* Grid pattern */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
+              backgroundImage: "linear-gradient(rgba(255,107,44,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,44,1) 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }} />
 
-          {/* Default Row - 2 cards */}
-          <motion.div
-            className="grid grid-cols-2 gap-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.12, delayChildren: 0.4 },
-              },
-            }}
-          >
-            {defaultStats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={stat.label}
-                  className="stat-card"
-                  style={{ perspective: "800px" }}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, rotateX: 8 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      rotateX: 0,
-                      transition: { duration: 0.6, type: "spring", stiffness: 100, damping: 15 },
-                    },
-                  }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 12px 30px rgba(255,107,44,0.12)" }}
-                >
-                  <div className="flex justify-center mb-2">
-                    <div className={stat.iconClass}>
-                      <Icon size={20} />
-                    </div>
+            <div className="relative p-6 sm:p-8">
+              {/* Hero Row - 2 big stats */}
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {[
+                  { icon: DollarSign, end: 30.1, prefix: "₩", suffix: "억", label: "2025 매출", sub: "YoY +924%", color: "#FF6B2C" },
+                  { icon: TrendingUp, end: 35.2, prefix: "", suffix: "%", label: "EBITDA 마진", sub: "업계 2~3배", color: "#10B981" },
+                ].map((stat, i) => {
+                  const Icon = stat.icon;
+                  return (
+                    <motion.div
+                      key={stat.label}
+                      className="relative rounded-xl p-5 sm:p-6 text-center overflow-hidden"
+                      style={{
+                        background: `${stat.color}08`,
+                        border: `1px solid ${stat.color}20`,
+                      }}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ delay: 0.3 + i * 0.15 }}
+                    >
+                      {/* Top accent line */}
+                      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${stat.color}, ${stat.color}80)` }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: `${stat.color}15` }}>
+                        <Icon size={20} style={{ color: stat.color }} />
+                      </div>
+                      <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1" style={{ color: stat.color }}>
+                        <AnimatedCounter end={stat.end} prefix={stat.prefix} suffix={stat.suffix} trigger={isInView} />
+                      </div>
+                      <div className="text-sm font-bold text-white/80">{stat.label}</div>
+                      <div className="text-[11px] text-white/40 mt-0.5">{stat.sub}</div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Default Row - 2 smaller stats */}
+              <div className="grid grid-cols-2 gap-3 mb-5">
+                {[
+                  { icon: ArrowUpRight, end: 924, prefix: "+", suffix: "%", label: "YoY 성장", sub: "전기 대비", color: "#3B82F6" },
+                  { icon: ShieldCheck, end: 7.5, prefix: "", suffix: "%", label: "부채비율", sub: "358%→7.5%", color: "#8B5CF6" },
+                ].map((stat, i) => {
+                  const Icon = stat.icon;
+                  return (
+                    <motion.div
+                      key={stat.label}
+                      className="relative rounded-xl p-4 sm:p-5 text-center"
+                      style={{
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                      }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ delay: 0.5 + i * 0.12 }}
+                    >
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-2" style={{ background: `${stat.color}15` }}>
+                        <Icon size={16} style={{ color: stat.color }} />
+                      </div>
+                      <div className="text-2xl sm:text-3xl font-black" style={{ color: stat.color }}>
+                        <AnimatedCounter end={stat.end} prefix={stat.prefix} suffix={stat.suffix} trigger={isInView} />
+                      </div>
+                      <div className="text-xs font-semibold text-white/70">{stat.label}</div>
+                      <div className="text-[10px] text-white/35 mt-0.5">{stat.sub}</div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Graph inside dark container */}
+              <motion.div
+                className="rounded-xl p-4 overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-white/60">Revenue Growth Trajectory</span>
+                  <div className="flex items-center gap-1 text-xs font-bold text-[#10B981]">
+                    <ArrowUpRight size={14} />
+                    <span>YoY +924%</span>
                   </div>
-                  <div className="text-3xl md:text-4xl font-black gt mb-1 whitespace-nowrap">
-                    <AnimatedCounter
-                      end={stat.end}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                      trigger={isInView}
-                    />
-                  </div>
-                  <div className="text-xs font-semibold text-t1 mb-0.5">{stat.label}</div>
-                  <div className="text-[11px] text-t2">{stat.sub}</div>
-                </motion.div>
-              );
-            })}
+                </div>
+                <MiniGraph />
+              </motion.div>
+
+              {/* Bottom badge row */}
+              <motion.div
+                className="flex flex-wrap justify-center gap-2 mt-5 pt-4"
+                style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+              >
+                {[
+                  { icon: Bot, label: "AI 자동화 85%+", color: "#FF6B2C" },
+                  { icon: Sparkles, label: "EBITDA 업계 3배", color: "#10B981" },
+                  { icon: Zap, label: "사실상 무부채", color: "#8B5CF6" },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <span key={item.label} className="inline-flex items-center gap-1.5 text-[10px] font-bold px-3 py-1.5 rounded-full" style={{ background: `${item.color}12`, color: item.color }}>
+                      <Icon size={11} /> {item.label}
+                    </span>
+                  );
+                })}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
-
-        {/* Graph */}
-        <motion.div
-          className="max-w-3xl mx-auto mb-6 card p-4 overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-t1">Revenue Growth Trajectory</span>
-            <div className="flex items-center gap-1 text-xs font-semibold text-green">
-              <ArrowUpRight size={14} />
-              <span>YoY +924%</span>
-            </div>
-          </div>
-          <MiniGraph />
-        </motion.div>
 
         {/* Industry Comparison Table */}
         <motion.div
@@ -335,7 +297,7 @@ export default function Slide02Proof() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           <div className="p-4">
             <div className="text-xs font-bold text-t1 mb-3 text-left">Afformation vs 업계 평균</div>
