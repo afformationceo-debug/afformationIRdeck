@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const bars = [
   { year: "2025", amount: "₩30억", height: 120, driver: "챗닥 + 글로벌 대행", sub: "EBITDA 35.2% · YoY +924%", gradient: "barLight", ebitda: 35, composition: { saas: 15, agency: 70, fintech: 0, chatdoc: 15 } },
@@ -280,17 +281,11 @@ export default function Slide11Financial() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
+        <AiChatBubble delay={1.5}>
           <p>
             2025년 30억(EBITDA 마진 35.2%)에서 시작하여, 2026년 대행 매출에 의도적 Cap을 씌우고 SaaS 전환을 가속합니다. SaaS 비중이 15%→50%→55%로 급증하며, EBITDA 마진은 35%에서 50%까지 상승합니다. 2027년 순수 SaaS + 핀테크 수수료 모델로 200억 이상의 초격차 J커브를 완성합니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
       </div>
     </SectionWrapper>
   );

@@ -5,6 +5,7 @@ import { Search, Clock, Zap, ArrowRight, LayoutDashboard, UserCircle, Inbox, Tre
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import AgentIndicator from "@/components/ui/AgentIndicator";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -385,17 +386,11 @@ export default function Slide05Demo() {
       </motion.div>
 
       {/* Desc Box */}
-      <motion.div
-        className="desc-box max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-      >
+      <AiChatBubble delay={0.6}>
         <p>
           저희가 현장에서 이 무기를 어떻게 쓰는지 직접 보여드리겠습니다. 미국 뷰티 틱톡커 100명 추출, AI 자동 DM 및 단가 협상까지. 과거 마케팅 에이전시 직원이 일주일 밤을 새우던 섭외 퍼널을 단 3분 만에 끝냈습니다. 이 무기가 바로 오늘 저희가 거대한 글로벌 확장을 선언하는 이유입니다.
         </p>
-      </motion.div>
+      </AiChatBubble>
     </SectionWrapper>
   );
 }

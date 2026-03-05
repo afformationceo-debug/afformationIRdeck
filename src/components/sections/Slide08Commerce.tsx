@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { DollarSign, Percent, Target, ArrowRight, Bot, Package, Truck, Zap } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const agents = [
   {
@@ -304,17 +305,11 @@ export default function Slide08Commerce() {
       </motion.p>
 
       {/* Desc Box */}
-      <motion.div
-        className="desc-box max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.7, duration: 0.6 }}
-      >
+      <AiChatBubble delay={0.7}>
         <p>
           K-브랜드의 틱톡샵 수출입니다. 북미 최대 K-뷰티 ODM인 CTK가 생산/물류를, 인도네시아 2위 재벌 시나르마스가 동남아 유통망을 책임집니다. 저희는 프론트엔드에서 틱톡 크리에이터 군단을 자동 매칭해 물건을 팔아치웁니다. 2026년 GMV $5M 달성을 목표로, 시스템 구독료와 8~12% 판매 수수료를 글로벌 달러로 쓸어 담습니다.
         </p>
-      </motion.div>
+      </AiChatBubble>
     </SectionWrapper>
   );
 }

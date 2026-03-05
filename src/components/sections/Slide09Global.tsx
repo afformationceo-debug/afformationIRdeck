@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Globe, Zap, MapPin, Users, Bot, Languages, CreditCard, ArrowRight, Cpu, Network } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const gtmStrategies = [
   {
@@ -373,17 +374,11 @@ export default function Slide09Global() {
       </motion.p>
 
       {/* Desc Box */}
-      <motion.div
-        className="desc-box max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-      >
+      <AiChatBubble delay={0.7}>
         <p>
           저희의 밸류에이션이 퀀텀 점프하는 지점입니다. 미국 LA 오피스를 거점으로 $28B 뷰티·라이프스타일 시장에 진입하고, 동남아에서는 시나르마스 JV를 레버리지해 $12B 시장을 공략합니다. CreatorIQ·Grin 대비 80% 저렴한 가격, 12개 언어 DM 자동화, 자체 정산 인프라 — 글로벌 스탠다드 마케팅 OS로 자리매김할 것입니다.
         </p>
-      </motion.div>
+      </AiChatBubble>
     </SectionWrapper>
   );
 }

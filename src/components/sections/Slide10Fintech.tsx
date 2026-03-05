@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { CheckCircle, FileCheck, Wallet, FileText, Globe2, DollarSign, Target } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 export default function Slide10Fintech() {
   return (
@@ -235,17 +236,11 @@ export default function Slide10Fintech() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1.4, duration: 0.5 }}
-        >
+        <AiChatBubble delay={1.4}>
           <p>
             궁극적인 비전은 &lsquo;글로벌 핀테크&rsquo;입니다. 2026년 $2M 처리를 목표로, 전자계약 건당 $1~3, 크로스보더 정산 1.5~3% 수수료로 수익화합니다. 모든 퍼널의 끝은 인플루언서에게 광고비를 지급하는 &lsquo;정산&rsquo;이기에, 전 세계의 막대한 인플루언서 광고 자금이 저희 플랫폼을 타고 흐르게 될 것입니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
       </div>
     </SectionWrapper>
   );

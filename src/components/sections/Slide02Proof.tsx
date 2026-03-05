@@ -6,6 +6,7 @@ import { TrendingUp, DollarSign, ShieldCheck, ArrowUpRight } from "lucide-react"
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import AgentIndicator from "@/components/ui/AgentIndicator";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 function AnimatedCounter({
   end,
@@ -357,20 +358,14 @@ export default function Slide02Proof() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-        >
+        <AiChatBubble delay={0.9}>
           <p>
             설립 2년차, 매출 YoY 924% 성장으로 30억을 돌파했습니다.
             EBITDA 마진 35.2%는 국내 에이전시 평균(10~15%) 대비 2~3배 수준이며,
             부채비율은 358%에서 7.5%로 개선 — 사실상 무부채입니다.
             이 &lsquo;글로벌 마케팅 OS&rsquo;가 시장에서 만들어낸 실제 재무적 결과물입니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
       </div>
     </SectionWrapper>
   );

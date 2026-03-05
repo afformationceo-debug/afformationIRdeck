@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Rocket, Target, Landmark, Cpu, Globe, TrendingUp, ArrowRight, Zap, Shield } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const cards = [
   {
@@ -273,19 +274,13 @@ export default function Slide12TheAsk() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1.1, duration: 0.5 }}
-        >
+        <AiChatBubble delay={1.1} className="mb-8">
           <p>
             이 라운드는 &lsquo;글로벌 유니콘&rsquo; 도약을 위한 전략적 동맹을 맺는 자리입니다.
             자금의 40%는 AI R&amp;D, 35%는 글로벌 시장 공략, 25%는 핀테크 인프라에 투입합니다.
             6개월 내 LA 오피스, 12개월 내 ARR $1M, 18개월 내 Series B 준비를 완료합니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
 
         {/* CTA */}
         <motion.div

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Bot, MessageCircle, Building2, TrendingDown, TrendingUp, Zap, Inbox } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const loopNodes = [
   {
@@ -431,17 +432,11 @@ export default function Slide07Medical() {
       </motion.div>
 
       {/* Desc Box */}
-      <motion.div
-        className="desc-box max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-      >
+      <AiChatBubble delay={0.6}>
         <p>
           첫 번째 확장은 본업인 &lsquo;K-의료 해외 환자 유치&rsquo;입니다. 대형 MSO 12건, 중소형 SaaS 45건을 수주하며 시장을 장악하고 있습니다. 기존 에이전시 대비 환자 유치 비용 68% 절감, 응답률 8배 향상 — 스카웃매니저의 AI 섭외력과 다국어 CS Flow가 만들어낸 압도적 경쟁 우위입니다.
         </p>
-      </motion.div>
+      </AiChatBubble>
 
       {/* Product Screenshot */}
       <motion.div

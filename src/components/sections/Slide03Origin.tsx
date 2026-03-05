@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 const phases = [
   {
@@ -262,20 +263,14 @@ export default function Slide03Origin() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-        >
+        <AiChatBubble delay={1.4}>
           <p>
             이 강력한 마케팅 OS는 저희의 치열한 본업에서 탄생했습니다.
             해외 환자를 한국 병원으로 유치하는 과정은 무려 30단계의 복잡한
             &lsquo;AI와 전문 인력의 교차 루프(Human-in-the-Loop)&rsquo;를 거쳐야만 합니다.
             각 단계마다 전담 AI 에이전트가 배치되어, Discovery에서 Conversion까지 전 퍼널을 자동화합니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
       </div>
     </SectionWrapper>
   );

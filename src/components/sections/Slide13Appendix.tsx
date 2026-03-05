@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { CalendarCheck, Building2, Rocket, TrendingUp, Target, Lock, AlertCircle } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 /* -- Monthly data (억원) -- */
 const monthlyData = [
@@ -426,17 +427,11 @@ export default function Slide13Appendix() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1.6, duration: 0.5 }}
-        >
+        <AiChatBubble delay={1.6}>
           <p>
             1~4월은 확정 실적, 5~12월은 보수적 가정 기반 예측입니다. 글로벌 대행 매출을 하반기부터 의도적으로 캡(Cap) 씌우고, 이탈/신규 고객 모두 SaaS 내재화로 전환합니다. 환율 $1=₩1,350 고정, 이탈률 월 5% 보수적 가정 하에 26년 103억, 27년 200억을 달성합니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
       </div>
     </SectionWrapper>
   );

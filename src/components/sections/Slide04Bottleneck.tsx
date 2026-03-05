@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 function FlowNode({
   icon,
@@ -289,19 +290,14 @@ export default function Slide04Bottleneck() {
         </motion.div>
 
         {/* Desc Box */}
-        <motion.div
-          className="desc-box max-w-3xl mx-auto mt-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1.8 }}
-        >
+        <AiChatBubble delay={1.8} className="mt-6">
           <p>
             전체 리소스의 80%가 현지 인플루언서를 찾고, DM을 보내고, 단가를 네고하는
             &lsquo;수동 노가다&rsquo;에 빠져나갔습니다. 이 병목을 완벽히 부수기 위해 저희가
             직접 개발한 AI 에이전트가 바로 &lsquo;스카웃매니저&rsquo;이고, 도입 즉시
             내부 생산성이 폭발하며 영업이익률이 40%로 치솟았습니다.
           </p>
-        </motion.div>
+        </AiChatBubble>
 
         {/* Bottom Bold Line */}
         <motion.div

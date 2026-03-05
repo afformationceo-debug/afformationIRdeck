@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, Activity, ShoppingBag, Globe, Bot, Layers, Cpu, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import AiChatBubble from "@/components/ui/AiChatBubble";
 
 interface EcoCard {
   num: string;
@@ -300,17 +301,11 @@ export default function Slide06Ecosystem() {
       </motion.div>
 
       {/* Desc Box */}
-      <motion.div
-        className="desc-box max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-      >
+      <AiChatBubble delay={0.6}>
         <p>
           저희의 사업 구조입니다. 먼저 월 2억 원의 수익을 내는 &lsquo;챗닥&rsquo; 플랫폼이 든든한 캐시카우로 하방을 지지합니다. 이 거대한 현금 엔진 위에서, 저희는 스카웃매니저를 무기로 3가지 폭발적인 스케일업(Catalyst)을 전개합니다. K-의료 MSO 12건, 틱톡샵 GMV $5M, 글로벌 SaaS ARR $1M — 각 사업이 시너지를 일으키며 동시 성장합니다.
         </p>
-      </motion.div>
+      </AiChatBubble>
     </SectionWrapper>
   );
 }
