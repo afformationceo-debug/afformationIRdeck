@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Sparkles, Bot, TrendingUp, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import AiChatBubble from "@/components/ui/AiChatBubble";
@@ -32,23 +33,23 @@ function JCurveChart({ inView }: { inView: boolean }) {
           <stop offset="100%" stopColor="#FF6B2C" />
         </linearGradient>
         <filter id="barShadow" x="-10%" y="-5%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#FF6B2C" floodOpacity="0.15" />
+          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#FF6B2C" floodOpacity="0.25" />
         </filter>
       </defs>
 
       {/* Grid lines */}
-      <line x1={70} y1={chartTop + 50} x2={570} y2={chartTop + 50} stroke="#F0EBE6" strokeWidth="0.8" />
-      <line x1={70} y1={chartTop + 130} x2={570} y2={chartTop + 130} stroke="#F0EBE6" strokeWidth="0.8" />
-      <line x1={70} y1={chartTop + 210} x2={570} y2={chartTop + 210} stroke="#F0EBE6" strokeWidth="0.8" />
+      <line x1={70} y1={chartTop + 50} x2={570} y2={chartTop + 50} stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1={70} y1={chartTop + 130} x2={570} y2={chartTop + 130} stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1={70} y1={chartTop + 210} x2={570} y2={chartTop + 210} stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
       {/* Base line */}
-      <line x1={70} y1={baseY} x2={570} y2={baseY} stroke="#E8E2DC" strokeWidth="1" />
+      <line x1={70} y1={baseY} x2={570} y2={baseY} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
 
       {/* EBITDA target zone */}
-      <rect x={70} y={chartTop + 30} width={500} height={30} fill="#10B981" opacity={0.03} rx={4} />
+      <rect x={70} y={chartTop + 30} width={500} height={30} fill="#10B981" opacity={0.04} rx={4} />
       <text x={575} y={chartTop + 50} textAnchor="end" fontSize="8" fill="#10B981" fontWeight="600" opacity={0.7}>50% EBITDA</text>
-      <text x={575} y={chartTop + 215} textAnchor="end" fontSize="8" fill="#999" fontWeight="500">0</text>
+      <text x={575} y={chartTop + 215} textAnchor="end" fontSize="8" fill="rgba(255,255,255,0.3)" fontWeight="500">0</text>
 
-      {/* Bars with 3D effect */}
+      {/* Bars */}
       {bars.map((bar, i) => {
         const x = 95 + i * 175;
         const barW = 110;
@@ -57,13 +58,13 @@ function JCurveChart({ inView }: { inView: boolean }) {
 
         return (
           <g key={bar.year}>
-            {/* Bar shadow */}
+            {/* Bar glow */}
             <motion.rect
               x={x + 6}
               width={barW}
               rx={6}
-              fill="#000"
-              opacity={0.04}
+              fill="#FF6B2C"
+              opacity={0.06}
               initial={{ height: 0, y: baseY }}
               animate={inView ? { height: barH, y: targetY + 4 } : { height: 0, y: baseY }}
               transition={{ duration: 1.2, delay: 0.3 + i * 0.25, ease: "easeOut" }}
@@ -86,12 +87,12 @@ function JCurveChart({ inView }: { inView: boolean }) {
               height={3}
               rx={1.5}
               fill="white"
-              opacity={0.25}
+              opacity={0.3}
               initial={{ y: baseY }}
               animate={inView ? { y: targetY + 2 } : { y: baseY }}
               transition={{ duration: 1.2, delay: 0.3 + i * 0.25, ease: "easeOut" }}
             />
-            {/* Amount label - positioned with enough space */}
+            {/* Amount label */}
             <motion.text
               x={x + barW / 2}
               y={targetY - 14}
@@ -106,10 +107,10 @@ function JCurveChart({ inView }: { inView: boolean }) {
               {bar.amount}
             </motion.text>
             {/* Year label */}
-            <text x={x + barW / 2} y={baseY + 20} textAnchor="middle" fontSize="13" fontWeight="700" fill="#1A1A1A">
+            <text x={x + barW / 2} y={baseY + 20} textAnchor="middle" fontSize="13" fontWeight="700" fill="rgba(255,255,255,0.7)">
               {bar.year}
             </text>
-            {/* Growth arrow for 2nd and 3rd bars */}
+            {/* Growth arrow */}
             {i > 0 && (
               <motion.text
                 x={x - 20}
@@ -136,6 +137,7 @@ function JCurveChart({ inView }: { inView: boolean }) {
         stroke="#10B981"
         strokeWidth="2.5"
         strokeLinecap="round"
+        filter="drop-shadow(0 0 8px rgba(16,185,129,0.3))"
         initial={{ pathLength: 0, opacity: 0 }}
         animate={inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
         transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
@@ -146,8 +148,8 @@ function JCurveChart({ inView }: { inView: boolean }) {
         const y = baseY - bar.height * (bar.ebitda / 100);
         return (
           <motion.g key={`ebitda-${i}`} initial={{ opacity: 0, scale: 0 }} animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }} transition={{ delay: 1.5 + i * 0.2, type: "spring", stiffness: 200, damping: 15 }}>
-            <circle cx={x} cy={y} r="8" fill="#10B981" opacity={0.1} />
-            <circle cx={x} cy={y} r="5" fill="#FFFFFF" stroke="#10B981" strokeWidth="2" />
+            <circle cx={x} cy={y} r="8" fill="#10B981" opacity={0.15} />
+            <circle cx={x} cy={y} r="5" fill="#161616" stroke="#10B981" strokeWidth="2" />
             <rect x={x - 16} y={y - 24} width={32} height={16} rx={4} fill="#10B981" />
             <text x={x} y={y - 13} textAnchor="middle" fontSize="9" fontWeight="700" fill="white">
               {bar.ebitda}%
@@ -182,102 +184,169 @@ export default function Slide11Financial() {
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <span className="badge badge-orange text-sm px-4 py-1.5">Revenue 30억→103억→200억</span>
-          <span className="badge badge-green text-sm px-4 py-1.5">EBITDA 마진 35%→50%</span>
+          <span className="inline-flex items-center gap-1.5 text-sm font-bold px-4 py-1.5 rounded-full" style={{ background: "rgba(255,107,44,0.08)", color: "#FF6B2C", border: "1px solid rgba(255,107,44,0.15)" }}>
+            Revenue 30억→103억→200억
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-sm font-bold px-4 py-1.5 rounded-full" style={{ background: "rgba(16,185,129,0.08)", color: "#10B981", border: "1px solid rgba(16,185,129,0.15)" }}>
+            EBITDA 마진 35%→50%
+          </span>
         </motion.div>
 
-        {/* Chart */}
-        <div ref={chartRef} className="mb-6">
-          <JCurveChart inView={isInView} />
+        {/* ===== Dark Chart Container ===== */}
+        <div ref={chartRef} className="max-w-4xl mx-auto mb-6">
+          <motion.div
+            className="relative rounded-2xl overflow-hidden"
+            style={{
+              background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+              border: "1px solid rgba(255,107,44,0.1)",
+              boxShadow: "0 12px 50px rgba(0,0,0,0.2)",
+            }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+          >
+            {/* Neural grid */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
+              backgroundImage: "linear-gradient(rgba(255,107,44,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,44,1) 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }} />
+
+            <div className="relative p-6 sm:p-8">
+              {/* Header */}
+              <motion.div
+                className="flex justify-center mb-4"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: "rgba(255,107,44,0.08)", border: "1px solid rgba(255,107,44,0.15)" }}>
+                  <Sparkles size={12} className="text-[#FF6B2C]" />
+                  <span className="text-[11px] font-bold text-[#FF6B2C]">AI-Driven Revenue Projection</span>
+                </div>
+              </motion.div>
+
+              {/* Chart */}
+              <JCurveChart inView={isInView} />
+
+              {/* Revenue Composition */}
+              <motion.div
+                className="mt-6 pt-5"
+                style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+              >
+                <div className="text-[10px] font-bold text-white/40 mb-3 text-center uppercase tracking-widest">Revenue Composition</div>
+                <div className="grid grid-cols-3 gap-3">
+                  {bars.map((bar) => (
+                    <div key={bar.year} className="rounded-lg p-3 text-center" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div className="text-sm font-black text-white/80 mb-2">{bar.year}</div>
+                      <div className="space-y-1.5">
+                        {[
+                          { label: "SaaS", pct: bar.composition.saas, color: "#FF6B2C" },
+                          { label: "대행", pct: bar.composition.agency, color: "#3B82F6" },
+                          { label: "핀테크", pct: bar.composition.fintech, color: "#8B5CF6" },
+                          { label: "챗닥", pct: bar.composition.chatdoc, color: "#10B981" },
+                        ].map((item) => (
+                          <div key={item.label} className="flex items-center gap-2 text-[11px]">
+                            <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: item.color }} />
+                            <span className="text-white/40">{item.label}</span>
+                            <span className="ml-auto font-bold" style={{ color: item.color }}>{item.pct}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Revenue Composition */}
-        <motion.div
-          className="max-w-2xl mx-auto mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-        >
-          <div className="text-xs font-bold text-t1 mb-3 text-center uppercase tracking-widest">Revenue Composition</div>
-          <div className="grid grid-cols-3 gap-3">
-            {bars.map((bar) => (
-              <div key={bar.year} className="card-flat p-3 text-center">
-                <div className="text-sm font-black text-t1 mb-2">{bar.year}</div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: "#FF6B2C" }} />
-                    <span className="text-t2">SaaS</span>
-                    <span className="ml-auto font-bold text-[#FF6B2C]">{bar.composition.saas}%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: "#3B82F6" }} />
-                    <span className="text-t2">대행</span>
-                    <span className="ml-auto font-bold text-[#3B82F6]">{bar.composition.agency}%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: "#8B5CF6" }} />
-                    <span className="text-t2">핀테크</span>
-                    <span className="ml-auto font-bold text-[#8B5CF6]">{bar.composition.fintech}%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: "#10B981" }} />
-                    <span className="text-t2">챗닥</span>
-                    <span className="ml-auto font-bold text-[#10B981]">{bar.composition.chatdoc}%</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Driver cards below bars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-2xl mx-auto mb-6">
+        {/* Driver cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl mx-auto mb-6">
           {bars.map((bar, i) => {
-            const borderColors = ["#FF8F5C", "#FF6B2C", "#E05A1F"];
+            const colors = ["#FF8F5C", "#FF6B2C", "#E05A1F"];
             return (
               <motion.div
                 key={bar.year}
-                className="card-flat text-center"
-                style={{ borderTop: `3px solid ${borderColors[i]}` }}
-                initial={{ opacity: 0, y: 15, rotateX: 6 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                whileHover={{ y: -5, rotateX: 3, scale: 1.02, boxShadow: "0 10px 25px rgba(0,0,0,0.08)" }}
+                className="relative rounded-xl p-4 text-center overflow-hidden"
+                style={{
+                  background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+                  border: `1px solid ${colors[i]}20`,
+                }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 1 + i * 0.15, duration: 0.4 }}
+                transition={{ delay: 0.8 + i * 0.15 }}
+                whileHover={{ y: -5, borderColor: `${colors[i]}40` }}
               >
-                <div className="text-base font-black text-t1">{bar.year}</div>
-                <div className="text-sm font-bold mt-1 gt">{bar.driver}</div>
-                <div className="text-xs text-t3 mt-1">{bar.sub}</div>
+                <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: colors[i], opacity: 0.6 }} />
+                <div className="text-base font-black text-white/80">{bar.year}</div>
+                <div className="text-sm font-bold mt-1" style={{ color: colors[i] }}>{bar.driver}</div>
+                <div className="text-xs text-white/40 mt-1">{bar.sub}</div>
               </motion.div>
             );
           })}
         </div>
 
         {/* Highlight */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 1.3 }}
-          className="text-3xl md:text-4xl font-black mt-6 max-w-xl mx-auto"
+          transition={{ delay: 1.1 }}
+          className="max-w-xl mx-auto mb-6 py-6 text-center rounded-2xl"
+          style={{
+            background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+            border: "1px solid rgba(255,107,44,0.15)",
+            boxShadow: "0 6px 30px rgba(0,0,0,0.15)",
+          }}
         >
-          초격차 <span className="gt inline-block">J커브</span> 완성
-        </motion.p>
+          <p className="text-3xl md:text-4xl font-black text-white">
+            초격차 <span className="gt inline-block">J커브</span> 완성
+          </p>
+        </motion.div>
 
         {/* Milestone Timeline */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-2 mt-6 mb-6"
+          className="flex flex-wrap items-center justify-center gap-2 mb-6"
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 1.4, duration: 0.5 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
         >
-          <div className="card-flat px-5 py-3 text-sm font-bold text-center" style={{ borderLeft: "3px solid #FF8F5C" }}>2025 &middot; 30억 달성</div>
-          <div className="conn" />
-          <div className="card-flat px-5 py-3 text-sm font-bold text-center" style={{ borderLeft: "3px solid #FF6B2C" }}>SaaS 비중 역전</div>
-          <div className="conn" />
-          <div className="card-flat px-5 py-3 text-sm font-bold text-center" style={{ borderLeft: "3px solid #E05A1F" }}>200억 &middot; 핀테크 완성</div>
+          {[
+            { label: "2025 · 30억 달성", color: "#FF8F5C" },
+            { label: "SaaS 비중 역전", color: "#FF6B2C" },
+            { label: "200억 · 핀테크 완성", color: "#E05A1F" },
+          ].map((item, i) => (
+            <div key={item.label} className="flex items-center gap-2">
+              <div
+                className="rounded-lg px-5 py-3 text-sm font-bold text-white/80 text-center"
+                style={{
+                  background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+                  borderLeft: `3px solid ${item.color}`,
+                  border: `1px solid ${item.color}25`,
+                }}
+              >
+                {item.label}
+              </div>
+              {i < 2 && (
+                <div className="relative w-6 h-[2px] rounded-full hidden sm:block" style={{ background: `${item.color}30` }}>
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
+                    style={{ background: item.color, boxShadow: `0 0 6px ${item.color}` }}
+                    animate={{ left: ["-2px", "22px"] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
         </motion.div>
 
         {/* Desc Box */}

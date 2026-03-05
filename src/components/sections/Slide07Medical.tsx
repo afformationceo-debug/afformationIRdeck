@@ -1,43 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bot, MessageCircle, Building2, TrendingDown, TrendingUp, Zap, Inbox } from "lucide-react";
+import { Bot, MessageCircle, Building2, TrendingDown, TrendingUp, Zap, Inbox, Sparkles, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import AiChatBubble from "@/components/ui/AiChatBubble";
 
-const loopNodes = [
+const loopAgents = [
   {
-    icon: <Bot size={26} />,
-    iconClass: "ic ic-orange",
+    icon: Bot,
     title: "ScoutManager AI 섭외",
     desc: "무한 인플루언서 섭외 엔진",
-    angle: 270,
+    color: "#FF6B2C",
+    status: "processing" as const,
   },
   {
-    icon: <MessageCircle size={26} />,
-    iconClass: "ic ic-blue",
+    icon: MessageCircle,
     title: "다국어 CS/예약 자동화",
     desc: "AI Flow 자동 응대",
-    angle: 30,
+    color: "#3B82F6",
+    status: "active" as const,
   },
   {
-    icon: <Building2 size={26} />,
-    iconClass: "ic ic-green",
+    icon: Building2,
     title: "병원 MSO & SaaS 수주",
     desc: "대형/중소 병원 공격적 수주",
-    angle: 150,
+    color: "#10B981",
+    status: "active" as const,
   },
 ];
-
-function getPosition(angleDeg: number, radius: number) {
-  const rad = (angleDeg * Math.PI) / 180;
-  return {
-    x: Math.cos(rad) * radius,
-    y: Math.sin(rad) * radius,
-  };
-}
 
 const costComparison = [
   { metric: "환자 유치 비용", afformation: "₩80만/건", agency: "₩250만/건", savings: "68%" },
@@ -45,63 +36,7 @@ const costComparison = [
   { metric: "응답률", afformation: "18.7%", agency: "2.3%", savings: "8x" },
 ];
 
-function MedicalScreenshot() {
-  return (
-    <div className="group relative rounded-xl overflow-hidden bg-white" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
-      <img
-        src="/screenshots/inbox.png"
-        alt="ScoutManager 다국어 통합 인박스"
-        width={800}
-        height={480}
-        className="w-full h-auto max-w-full transition-transform duration-500 group-hover:scale-[1.02]"
-        loading="lazy"
-      />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent p-3 sm:p-5">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
-            <Inbox size={14} className="text-white" />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs sm:text-sm font-bold text-white">다국어 통합 인박스</span>
-            <span className="text-[10px] sm:text-xs text-white/70 block truncate">LINE · Instagram · WhatsApp 실시간 CS 자동화</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Slide07Medical() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  const R = 170;
-  const cx = 250;
-  const cy = 240;
-
-  const points = loopNodes.map((n) => {
-    const pos = getPosition(n.angle, R);
-    return { x: cx + pos.x, y: cy + pos.y };
-  });
-
-  function arcPath(from: { x: number; y: number }, to: { x: number; y: number }) {
-    const mx = (from.x + to.x) / 2;
-    const my = (from.y + to.y) / 2;
-    const dx = mx - cx;
-    const dy = my - cy;
-    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const bulge = 45;
-    const cpx = mx + (dx / dist) * bulge;
-    const cpy = my + (dy / dist) * bulge;
-    return `M ${from.x} ${from.y} Q ${cpx} ${cpy} ${to.x} ${to.y}`;
-  }
-
-  const paths = [
-    arcPath(points[0], points[1]),
-    arcPath(points[1], points[2]),
-    arcPath(points[2], points[0]),
-  ];
-
   return (
     <SectionWrapper id="medical" chapter="07">
       {/* Title */}
@@ -115,225 +50,184 @@ export default function Slide07Medical() {
         />
       </div>
 
-      {/* Circular Loop Diagram — Desktop */}
-      {mounted && (
-        <div className="hidden sm:flex justify-center mb-8 overflow-hidden">
-          <div className="relative mx-auto w-full" style={{ maxWidth: 500, height: 480 }}>
-            <div className="aura" style={{ width: 220, height: 220, background: "rgba(255,107,44,0.08)", left: "50%", top: "50%", transform: "translate(-50%,-50%)", position: "absolute", zIndex: 0 }} />
-            {/* SVG Arrows */}
-            <svg
-              className="absolute inset-0 w-full h-full"
-              viewBox="0 0 500 480"
+      {/* ===== Dark AI Loop Container ===== */}
+      <div className="max-w-4xl mx-auto mb-8">
+        <motion.div
+          className="relative rounded-2xl overflow-hidden"
+          style={{
+            background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+            border: "1px solid rgba(255,107,44,0.1)",
+            boxShadow: "0 12px 50px rgba(0,0,0,0.2)",
+          }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+        >
+          {/* Neural grid */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
+            backgroundImage: "linear-gradient(rgba(255,107,44,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,44,1) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }} />
+
+          <div className="relative p-6 sm:p-8">
+            {/* Header */}
+            <motion.div
+              className="flex justify-center mb-6"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
             >
-              <defs>
-                <marker
-                  id="arrowMedical"
-                  markerWidth="8"
-                  markerHeight="6"
-                  refX="8"
-                  refY="3"
-                  orient="auto"
-                >
-                  <polygon
-                    points="0 0, 8 3, 0 6"
-                    fill="#FF6B2C"
-                    opacity="0.85"
-                  />
-                </marker>
-                <filter id="arrowGlow" x="-40%" y="-40%" width="180%" height="180%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feFlood floodColor="#FF6B2C" floodOpacity="0.35" result="color" />
-                  <feComposite in="color" in2="blur" operator="in" result="glow" />
-                  <feMerge>
-                    <feMergeNode in="glow" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: "rgba(255,107,44,0.08)", border: "1px solid rgba(255,107,44,0.15)" }}>
+                <Sparkles size={12} className="text-[#FF6B2C]" />
+                <span className="text-[11px] font-bold text-[#FF6B2C]">AI-Powered Virtuous Loop</span>
+              </div>
+            </motion.div>
 
-              {/* Subtle background circle */}
-              <circle
-                cx={cx}
-                cy={cy}
-                r={R}
-                fill="none"
-                stroke="#E8E2DC"
-                strokeWidth="1"
-                strokeDasharray="4 6"
-              />
-
-              {/* Curved Arrows */}
-              {paths.map((d, i) => (
-                <motion.path
-                  key={`path-${i}`}
-                  d={d}
-                  fill="none"
-                  stroke="#FF6B2C"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  markerEnd="url(#arrowMedical)"
-                  filter="url(#arrowGlow)"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 0.75 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.3, duration: 1 }}
+            {/* Center Hub */}
+            <motion.div
+              className="flex justify-center mb-6"
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, type: "spring", stiffness: 80, damping: 12 }}
+            >
+              <div className="relative">
+                {/* Pulsing ring */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{ border: "2px solid rgba(255,107,44,0.3)" }}
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                  transition={{ duration: 2.5, repeat: Infinity }}
                 />
-              ))}
-
-              {/* Animated dashes */}
-              {paths.map((d, i) => (
-                <path
-                  key={`dash-${i}`}
-                  d={d}
-                  fill="none"
-                  stroke="#FF6B2C"
-                  strokeWidth="2"
-                  strokeDasharray="8 4"
-                  opacity="0.3"
-                  style={{
-                    animation: `dash 1s linear infinite`,
-                    animationDelay: `${i * 0.5}s`,
-                  }}
-                />
-              ))}
-
-              {/* Animated dots traveling along paths */}
-              {paths.map((d, i) => (
-                <circle
-                  key={`dot-${i}`}
-                  r="5"
-                  fill="#FF6B2C"
-                  opacity="0.8"
-                >
-                  <animateMotion
-                    dur="3s"
-                    repeatCount="indefinite"
-                    begin={`${i * 1}s`}
-                    path={d}
-                  />
-                </circle>
-              ))}
-            </svg>
-
-            {/* Center Label */}
-            <div className="absolute left-1/2 top-1/2 z-10" style={{ transform: "translate(-50%, -50%)" }}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, type: "spring" }}
-              >
                 <div
-                  className="w-24 h-24 rounded-full bg-white border-2 border-dashed border-orange flex items-center justify-center glow-orange"
-                  style={{ boxShadow: "0 4px 24px rgba(255,107,44,0.18)" }}
+                  className="w-20 h-20 rounded-full flex items-center justify-center"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,107,44,0.2), rgba(255,107,44,0.08))",
+                    border: "1.5px solid rgba(255,107,44,0.4)",
+                    boxShadow: "0 0 30px rgba(255,107,44,0.15)",
+                  }}
                 >
-                  <span
-                    className="text-xs font-bold gt text-center leading-tight"
-                  >
-                    선순환
+                  <div className="text-center">
+                    <span className="text-[11px] font-black text-[#FF6B2C]">선순환</span>
                     <br />
-                    루프
-                  </span>
+                    <span className="text-[9px] font-bold text-white/50">LOOP</span>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
 
-            {/* Nodes */}
-            {loopNodes.map((node, i) => {
-              const pos = getPosition(node.angle, R);
-              return (
-                <div
-                  key={node.title}
-                  className="absolute z-20"
-                  style={{
-                    left: cx + pos.x,
-                    top: cy + pos.y,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.7 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    whileHover={{ scale: 1.06, boxShadow: "0 12px 30px rgba(255,107,44,0.15)" }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + i * 0.2, duration: 0.5 }}
-                  >
-                    <div className="node p-4 text-center w-44 relative bg-white">
-                      <span className="absolute top-2 right-2 w-[6px] h-[6px] rounded-full bg-green animate-pulse" />
-                      <div className={`${node.iconClass} mx-auto mb-2`}>
-                        {node.icon}
+            {/* 3 Agent Nodes - Circular/Horizontal */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6">
+              {loopAgents.map((agent, i) => {
+                const Icon = agent.icon;
+                return (
+                  <div key={agent.title} className="flex items-center gap-3 sm:gap-0">
+                    <motion.div
+                      className="relative rounded-xl px-5 py-4 text-center"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: `1px solid ${agent.color}25`,
+                        minWidth: 180,
+                      }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5 + i * 0.15 }}
+                      whileHover={{ y: -4, borderColor: `${agent.color}50`, boxShadow: `0 8px 25px ${agent.color}15` }}
+                    >
+                      {/* Status dot */}
+                      <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
+                        <span className="relative flex h-1.5 w-1.5">
+                          {agent.status === "processing" && (
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ background: agent.color }} />
+                          )}
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: agent.color }} />
+                        </span>
+                        <span className="text-[7px] font-bold uppercase" style={{ color: agent.color }}>
+                          {agent.status === "processing" ? "Processing" : "Active"}
+                        </span>
                       </div>
-                      <div className="text-sm font-bold text-t1 mb-1">{node.title}</div>
-                      <div className="text-[11px] text-t2">{node.desc}</div>
-                    </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-      {!mounted && (
-        <div className="hidden sm:flex justify-center mb-8" style={{ height: 480 }} />
-      )}
 
-      {/* Loop Diagram — Mobile (simplified vertical flow) */}
-      <motion.div
-        className="sm:hidden mb-8 px-2"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
-        }}
-      >
-        {/* Center label */}
-        <div className="flex justify-center mb-4">
-          <div className="w-16 h-16 rounded-full bg-white border-2 border-dashed border-orange flex items-center justify-center" style={{ boxShadow: "0 2px 12px rgba(255,107,44,0.15)" }}>
-            <span className="text-[10px] font-bold gt text-center leading-tight">선순환<br />루프</span>
-          </div>
-        </div>
-        {/* Vertical flow nodes */}
-        {loopNodes.map((node, i) => (
-          <motion.div
-            key={node.title}
-            variants={{
-              hidden: { opacity: 0, x: -20 },
-              visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100, damping: 15 } },
-            }}
-          >
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white mb-2" style={{ border: "1px solid rgba(232,226,220,0.5)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-              <div className={`${node.iconClass} shrink-0`}>{node.icon}</div>
-              <div className="min-w-0">
-                <div className="text-sm font-bold text-t1">{node.title}</div>
-                <div className="text-[11px] text-t3">{node.desc}</div>
-              </div>
-              <span className="w-[6px] h-[6px] rounded-full bg-green animate-pulse shrink-0 ml-auto" />
+                      <div
+                        className="w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-2"
+                        style={{ background: `${agent.color}15` }}
+                      >
+                        <Icon size={20} style={{ color: agent.color }} />
+                      </div>
+                      <div className="text-sm font-bold text-white">{agent.title}</div>
+                      <div className="text-[10px] text-white/40 mt-0.5">{agent.desc}</div>
+                    </motion.div>
+
+                    {/* Connector */}
+                    {i < loopAgents.length - 1 && (
+                      <motion.div
+                        className="hidden sm:flex items-center mx-2"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.7 + i * 0.15 }}
+                      >
+                        <div className="relative w-8 h-[2px] rounded-full" style={{ background: `${agent.color}30` }}>
+                          <motion.div
+                            className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
+                            style={{ background: agent.color, boxShadow: `0 0 6px ${agent.color}` }}
+                            animate={{ left: ["-2px", "30px"] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            {i < loopNodes.length - 1 && (
-              <div className="flex justify-center py-1">
-                <svg width="12" height="20" viewBox="0 0 12 20">
-                  <line x1="6" y1="0" x2="6" y2="14" stroke="#FF6B2C" strokeWidth="1.5" strokeDasharray="3 2" opacity={0.4} />
-                  <polygon points="2,14 10,14 6,20" fill="#FF6B2C" opacity={0.4} />
-                </svg>
-              </div>
-            )}
-          </motion.div>
-        ))}
-        {/* Loop back arrow */}
-        <div className="flex justify-center mt-1">
-          <div className="text-[10px] font-semibold text-[#FF6B2C] flex items-center gap-1 opacity-60">
-            <svg width="40" height="12" viewBox="0 0 40 12">
-              <path d="M 38 6 Q 20 -4 2 6" fill="none" stroke="#FF6B2C" strokeWidth="1.2" strokeDasharray="3 2" />
-              <polygon points="0,4 0,8 4,6" fill="#FF6B2C" />
-            </svg>
-            반복
-          </div>
-        </div>
-      </motion.div>
 
-      {/* Case Numbers */}
+            {/* Loop-back arrow */}
+            <motion.div
+              className="flex justify-center mb-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1 }}
+            >
+              <div className="flex items-center gap-2 text-[10px] font-bold text-white/30">
+                <svg width="60" height="14" viewBox="0 0 60 14">
+                  <path d="M 58 7 Q 30 -6 2 7" fill="none" stroke="#FF6B2C" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.4" />
+                  <polygon points="0,5 0,9 4,7" fill="#FF6B2C" opacity="0.4" />
+                </svg>
+                <span className="text-[#FF6B2C]/50">무한 반복</span>
+              </div>
+            </motion.div>
+
+            {/* Bottom stats row */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-3 pt-4"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.1 }}
+            >
+              {[
+                { icon: TrendingDown, label: "원가 70% 절감", color: "#10B981" },
+                { icon: TrendingUp, label: "MSO 3x 성장", color: "#FF6B2C" },
+                { icon: Zap, label: "AI 섭외 99% 자동화", color: "#8B5CF6" },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <span key={item.label} className="inline-flex items-center gap-1.5 text-[10px] font-bold px-3 py-1.5 rounded-full" style={{ background: `${item.color}12`, color: item.color }}>
+                    <Icon size={11} /> {item.label}
+                  </span>
+                );
+              })}
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Case Numbers — Dark Cards */}
       <motion.div
         className="max-w-3xl mx-auto mb-6"
         initial={{ opacity: 0, y: 20 }}
@@ -342,29 +236,42 @@ export default function Slide07Medical() {
         transition={{ delay: 0.3, duration: 0.6 }}
       >
         <div className="grid grid-cols-2 gap-4">
-          <div className="card-flat p-5 text-center">
-            <div className="text-3xl font-black gt mb-1">12건</div>
-            <div className="text-sm font-semibold text-t1">대형 MSO 계약</div>
-            <div className="text-[11px] text-t3 mt-1">상급종합병원 · 대형 성형외과</div>
-          </div>
-          <div className="card-flat p-5 text-center">
-            <div className="text-3xl font-black gt mb-1">45건</div>
-            <div className="text-sm font-semibold text-t1">중소형 SaaS 공급</div>
-            <div className="text-[11px] text-t3 mt-1">피부과 · 치과 · 안과 등</div>
-          </div>
+          {[
+            { value: "12건", label: "대형 MSO 계약", sub: "상급종합병원 · 대형 성형외과", color: "#FF6B2C" },
+            { value: "45건", label: "중소형 SaaS 공급", sub: "피부과 · 치과 · 안과 등", color: "#8B5CF6" },
+          ].map((item) => (
+            <motion.div
+              key={item.label}
+              className="relative rounded-xl p-5 text-center overflow-hidden"
+              style={{
+                background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+                border: `1px solid ${item.color}20`,
+              }}
+              whileHover={{ y: -4, borderColor: `${item.color}40` }}
+            >
+              <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: item.color, opacity: 0.5 }} />
+              <div className="text-3xl font-black mb-1" style={{ color: item.color }}>{item.value}</div>
+              <div className="text-sm font-semibold text-white/80">{item.label}</div>
+              <div className="text-[11px] text-white/40 mt-1">{item.sub}</div>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
 
       {/* Cost Comparison Table */}
       <motion.div
-        className="max-w-3xl mx-auto mb-6 card overflow-hidden"
+        className="max-w-3xl mx-auto mb-6 rounded-xl overflow-hidden"
+        style={{
+          background: "linear-gradient(180deg, #0F0F0F 0%, #161616 100%)",
+          border: "1px solid rgba(255,255,255,0.06)",
+        }}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
         <div className="p-4">
-          <div className="text-xs font-bold text-t1 mb-3 text-left">Afformation vs 기존 에이전시</div>
+          <div className="text-xs font-bold text-white/60 mb-3 text-left">Afformation vs 기존 에이전시</div>
           <div className="space-y-2">
             {costComparison.map((row) => (
               <div
@@ -372,63 +279,14 @@ export default function Slide07Medical() {
                 className="flex items-center justify-between py-2 px-3 rounded-lg"
                 style={{ background: "rgba(255,107,44,0.04)" }}
               >
-                <span className="text-sm font-semibold text-t1 w-1/4 text-left">{row.metric}</span>
+                <span className="text-sm font-semibold text-white/70 w-1/4 text-left">{row.metric}</span>
                 <span className="text-sm font-black text-[#FF6B2C] w-1/4 text-center">{row.afformation}</span>
-                <span className="text-sm text-t3 w-1/4 text-center line-through decoration-1">{row.agency}</span>
+                <span className="text-sm text-white/30 w-1/4 text-center line-through decoration-1">{row.agency}</span>
                 <span className="text-sm font-bold text-[#10B981] w-1/4 text-right">{row.savings} 절감</span>
               </div>
             ))}
           </div>
         </div>
-      </motion.div>
-
-      {/* Bottom Stats */}
-      <motion.div
-        className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-      >
-        <motion.div
-          className="card-flat flex items-center gap-4 px-6 py-5"
-          whileHover={{ y: -5, rotateX: 3, boxShadow: "0 10px 25px rgba(0,0,0,0.08)" }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        >
-          <div className="ic ic-sm ic-green">
-            <TrendingDown size={20} />
-          </div>
-          <div>
-            <span className="text-2xl font-black text-[#10B981]">70%</span>
-            <span className="text-sm font-bold text-t1 ml-1.5">원가 절감</span>
-          </div>
-        </motion.div>
-        <motion.div
-          className="card-flat flex items-center gap-4 px-6 py-5"
-          whileHover={{ y: -5, rotateX: 3, boxShadow: "0 10px 25px rgba(0,0,0,0.08)" }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        >
-          <div className="ic ic-sm ic-orange">
-            <TrendingUp size={20} />
-          </div>
-          <div>
-            <span className="text-2xl font-black text-orange">3x</span>
-            <span className="text-sm font-bold text-t1 ml-1.5">MSO 계약 성장</span>
-          </div>
-        </motion.div>
-        <motion.div
-          className="card-flat flex items-center gap-4 px-6 py-5"
-          whileHover={{ y: -5, rotateX: 3, boxShadow: "0 10px 25px rgba(0,0,0,0.08)" }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        >
-          <div className="ic ic-xs ic-orange">
-            <Zap size={16} />
-          </div>
-          <div>
-            <span className="text-2xl font-black text-orange">99%</span>
-            <span className="text-sm font-bold text-t1 ml-1.5">AI 섭외 자동화</span>
-          </div>
-        </motion.div>
       </motion.div>
 
       {/* Desc Box */}
@@ -446,7 +304,27 @@ export default function Slide07Medical() {
         viewport={{ once: true }}
         transition={{ delay: 0.8, duration: 0.5 }}
       >
-        <MedicalScreenshot />
+        <div className="group relative rounded-xl overflow-hidden bg-white" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
+          <img
+            src="/screenshots/inbox.png"
+            alt="ScoutManager 다국어 통합 인박스"
+            width={800}
+            height={480}
+            className="w-full h-auto max-w-full transition-transform duration-500 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent p-3 sm:p-5">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
+                <Inbox size={14} className="text-white" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs sm:text-sm font-bold text-white">다국어 통합 인박스</span>
+                <span className="text-[10px] sm:text-xs text-white/70 block truncate">LINE · Instagram · WhatsApp 실시간 CS 자동화</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </SectionWrapper>
   );
