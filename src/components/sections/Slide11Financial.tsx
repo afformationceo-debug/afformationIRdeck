@@ -14,11 +14,11 @@ const bars = [
 ];
 
 function JCurveChart({ inView }: { inView: boolean }) {
-  const baseY = 340;
-  const chartTop = 60;
+  const baseY = 370;
+  const chartTop = 80;
 
   return (
-    <svg viewBox="0 0 620 400" className="w-full max-w-xl mx-auto h-auto">
+    <svg viewBox="0 0 620 440" className="w-full max-w-xl mx-auto h-auto">
       <defs>
         <linearGradient id="barLight" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#FF8F5C" />
@@ -92,20 +92,34 @@ function JCurveChart({ inView }: { inView: boolean }) {
               animate={inView ? { y: targetY + 2 } : { y: baseY }}
               transition={{ duration: 1.2, delay: 0.3 + i * 0.25, ease: "easeOut" }}
             />
-            {/* Amount label */}
-            <motion.text
-              x={x + barW / 2}
-              y={targetY - 14}
-              textAnchor="middle"
-              fontSize="20"
-              fontWeight="900"
-              fill="#FF6B2C"
-              initial={{ opacity: 0, y: targetY }}
-              animate={inView ? { opacity: 1, y: targetY - 14 } : { opacity: 0, y: targetY }}
+            {/* Amount label with background */}
+            <motion.g
+              initial={{ opacity: 0, y: 10 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.9 + i * 0.25, duration: 0.5 }}
             >
-              {bar.amount}
-            </motion.text>
+              <rect
+                x={x + barW / 2 - 48}
+                y={targetY - 38}
+                width={96}
+                height={28}
+                rx={6}
+                fill="#0F0F0F"
+                stroke="#FF6B2C"
+                strokeWidth="1.5"
+                opacity={0.95}
+              />
+              <text
+                x={x + barW / 2}
+                y={targetY - 19}
+                textAnchor="middle"
+                fontSize="18"
+                fontWeight="900"
+                fill="#FFFFFF"
+              >
+                {bar.amount}
+              </text>
+            </motion.g>
             {/* Year label */}
             <text x={x + barW / 2} y={baseY + 20} textAnchor="middle" fontSize="13" fontWeight="700" fill="rgba(255,255,255,0.7)">
               {bar.year}
