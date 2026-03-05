@@ -148,7 +148,7 @@ export default function Navigation() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden xl:flex flex-col items-end gap-1"
+            className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden 2xl:flex flex-col items-end gap-1"
           >
             {NAV_GROUPS.map((group) => (
               <div key={group.group} className="flex flex-col items-end gap-[4px] mb-1.5">

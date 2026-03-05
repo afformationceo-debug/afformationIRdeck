@@ -50,17 +50,19 @@ function MedicalScreenshot() {
       <img
         src="/screenshots/inbox.png"
         alt="ScoutManager 다국어 통합 인박스"
-        className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
+        width={800}
+        height={480}
+        className="w-full h-auto max-w-full transition-transform duration-500 group-hover:scale-[1.02]"
         loading="lazy"
       />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent p-5">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center">
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent p-3 sm:p-5">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
             <Inbox size={14} className="text-white" />
           </div>
-          <div>
-            <span className="text-sm font-bold text-white">다국어 통합 인박스</span>
-            <span className="text-xs text-white/70 block">LINE · Instagram · WhatsApp 실시간 CS 자동화</span>
+          <div className="min-w-0">
+            <span className="text-xs sm:text-sm font-bold text-white">다국어 통합 인박스</span>
+            <span className="text-[10px] sm:text-xs text-white/70 block truncate">LINE · Instagram · WhatsApp 실시간 CS 자동화</span>
           </div>
         </div>
       </div>
@@ -112,9 +114,9 @@ export default function Slide07Medical() {
         />
       </div>
 
-      {/* Circular Loop Diagram */}
+      {/* Circular Loop Diagram — Desktop */}
       {mounted && (
-        <div className="flex justify-center mb-8 overflow-hidden">
+        <div className="hidden sm:flex justify-center mb-8 overflow-hidden">
           <div className="relative mx-auto w-full" style={{ maxWidth: 500, height: 480 }}>
             <div className="aura" style={{ width: 220, height: 220, background: "rgba(255,107,44,0.08)", left: "50%", top: "50%", transform: "translate(-50%,-50%)", position: "absolute", zIndex: 0 }} />
             {/* SVG Arrows */}
@@ -271,8 +273,64 @@ export default function Slide07Medical() {
         </div>
       )}
       {!mounted && (
-        <div className="flex justify-center mb-8" style={{ height: 480 }} />
+        <div className="hidden sm:flex justify-center mb-8" style={{ height: 480 }} />
       )}
+
+      {/* Loop Diagram — Mobile (simplified vertical flow) */}
+      <motion.div
+        className="sm:hidden mb-8 px-2"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+        }}
+      >
+        {/* Center label */}
+        <div className="flex justify-center mb-4">
+          <div className="w-16 h-16 rounded-full bg-white border-2 border-dashed border-orange flex items-center justify-center" style={{ boxShadow: "0 2px 12px rgba(255,107,44,0.15)" }}>
+            <span className="text-[10px] font-bold gt text-center leading-tight">선순환<br />루프</span>
+          </div>
+        </div>
+        {/* Vertical flow nodes */}
+        {loopNodes.map((node, i) => (
+          <motion.div
+            key={node.title}
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100, damping: 15 } },
+            }}
+          >
+            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white mb-2" style={{ border: "1px solid rgba(232,226,220,0.5)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+              <div className={`${node.iconClass} shrink-0`}>{node.icon}</div>
+              <div className="min-w-0">
+                <div className="text-sm font-bold text-t1">{node.title}</div>
+                <div className="text-[11px] text-t3">{node.desc}</div>
+              </div>
+              <span className="w-[6px] h-[6px] rounded-full bg-green animate-pulse shrink-0 ml-auto" />
+            </div>
+            {i < loopNodes.length - 1 && (
+              <div className="flex justify-center py-1">
+                <svg width="12" height="20" viewBox="0 0 12 20">
+                  <line x1="6" y1="0" x2="6" y2="14" stroke="#FF6B2C" strokeWidth="1.5" strokeDasharray="3 2" opacity={0.4} />
+                  <polygon points="2,14 10,14 6,20" fill="#FF6B2C" opacity={0.4} />
+                </svg>
+              </div>
+            )}
+          </motion.div>
+        ))}
+        {/* Loop back arrow */}
+        <div className="flex justify-center mt-1">
+          <div className="text-[10px] font-semibold text-[#FF6B2C] flex items-center gap-1 opacity-60">
+            <svg width="40" height="12" viewBox="0 0 40 12">
+              <path d="M 38 6 Q 20 -4 2 6" fill="none" stroke="#FF6B2C" strokeWidth="1.2" strokeDasharray="3 2" />
+              <polygon points="0,4 0,8 4,6" fill="#FF6B2C" />
+            </svg>
+            반복
+          </div>
+        </div>
+      </motion.div>
 
       {/* Case Numbers */}
       <motion.div

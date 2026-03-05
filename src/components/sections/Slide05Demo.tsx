@@ -53,7 +53,7 @@ function ScreenshotShowcase() {
       <div className="text-center mb-5">
         <span className="text-xs font-bold tracking-widest uppercase text-t3">Real Product</span>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
         {screenshots.map((s, i) => {
           const Icon = s.icon;
           return (
@@ -67,19 +67,21 @@ function ScreenshotShowcase() {
               transition={{ delay: 0.4 + i * 0.12, type: "spring", stiffness: 120, damping: 18 }}
               whileHover={{ y: -8, boxShadow: "0 20px 50px rgba(0,0,0,0.12)" }}
             >
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden" style={{ minHeight: 120 }}>
                 <img
                   src={`/screenshots/${s.file}.png`}
                   alt={s.label}
-                  className="w-full h-48 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  width={400}
+                  height={240}
+                  className="w-full h-40 sm:h-48 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
-              <div className="p-4">
+              <div className="p-3 sm:p-4">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div
-                    className="w-6 h-6 rounded-lg flex items-center justify-center"
+                    className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
                     style={{ background: `${s.color}12`, color: s.color }}
                   >
                     <Icon size={13} />
